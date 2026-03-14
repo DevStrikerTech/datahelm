@@ -58,7 +58,7 @@ docs/
 ### Prerequisites
 
 - Python 3.12+
-- PostgreSQL (reachable from local environment)
+- PostgreSQL (accessible from the local environment)
 - Optional: Docker, local Ollama, dbt CLI
 
 ### Installation
@@ -147,7 +147,7 @@ Run all tests:
 .venv/bin/python -m pytest -q
 ```
 
-Current suite covers:
+The current test suite covers:
 
 - ingestion and handler behavior
 - analytics factory and runner logic
