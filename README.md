@@ -1,6 +1,6 @@
 # DataHelm
 
-DataHelm is a data engineering framework focused on:
+DataHelm is a data engineering framework focused on the following:
 
 - source ingestion and orchestration
 - dbt transformation workflows
@@ -91,7 +91,7 @@ CLASHOFCLANS_API_TOKEN=${CLASHOFCLANS_API_TOKEN}
 python scripts/run_dagster_dev.py
 ```
 
-Useful option:
+Useful option for quick verification:
 
 ```bash
 python scripts/run_dagster_dev.py --print-only
