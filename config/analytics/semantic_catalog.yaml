@@ -1,0 +1,26 @@
+warehouse: postgres
+
+global_rules:
+  - "Only read-only SQL is allowed."
+  - "Queries must include LIMIT."
+  - "Default ordering for recency should use last_mtime desc when relevant."
+
+datasets:
+  clashofclans_player_stats:
+    table: "clashofclans_analytics.fct_clashofclans_player_stats"
+    description: "Player-level fact table for Clash of Clans performance."
+    dimensions:
+      - "id"
+      - "name"
+      - "last_mtime"
+    metrics:
+      - "attackwins"
+      - "defensewins"
+    synonyms:
+      attackwins:
+        - "attack wins"
+        - "attacks won"
+      defensewins:
+        - "defense wins"
+        - "defenses won"
+    time_column: "last_mtime"
