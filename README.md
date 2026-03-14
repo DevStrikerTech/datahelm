@@ -8,6 +8,8 @@ DataHelm is a data engineering framework focused on:
 - reusable provider connectors (SharePoint, GCS, S3, BigQuery)
 - optional local-LLM analytics query scaffolding
 
+![alt text](https://github.com/DevStrikerTech/datahelm/blob/master/docs/architecture.png?raw=true)
+
 ## Core Capabilities
 
 - **Config-driven ingestion** using YAML in `config/api/`
