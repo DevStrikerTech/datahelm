@@ -172,7 +172,7 @@ Workflows:
 
 Container image is defined via `Dockerfile`.
 
-Default runtime command starts Dagster gRPC:
+Default runtime command starts the Dagster gRPC server:
 
 ```bash
 python -m dagster api grpc -m dagster_op.repository
