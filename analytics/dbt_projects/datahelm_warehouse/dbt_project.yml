@@ -1,0 +1,22 @@
+name: "datahelm_warehouse"
+version: "1.0.0"
+config-version: 2
+
+profile: "datahelm"
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+analysis-paths: ["analyses"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  datahelm_warehouse:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: incremental
