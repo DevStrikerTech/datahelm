@@ -5,7 +5,7 @@ DataHelm is a data engineering framework focused on:
 - source ingestion and orchestration
 - dbt transformation workflows
 - notebook-based dashboard execution
-- reusable provider connectors (SharePoint, GCS, S3, BigQuery)
+- reusable provider connectors (SharePoint, GCS, S3, and BigQuery)
 - optional local LLM analytics query scaffolding
 
 ![DataHelm Architecture](https://github.com/DevStrikerTech/datahelm/blob/master/docs/architecture.png?raw=true)
@@ -13,15 +13,15 @@ DataHelm is a data engineering framework focused on:
 ## Core Capabilities
 
 - **Config-driven ingestion** using YAML in `config/api/`
-- **Dagster orchestration** for jobs, schedules, and sensors
-- **dbt project execution** through `analytics/dbt_runner.py` and dbt configs
+- **Dagster orchestration** for managing jobs, schedules, and sensors
+- **dbt project execution** through `analytics/dbt_runner.py` and dbt configuration files
 - **Dashboard generation** with Dagstermill notebooks
 - **Reusable handlers/connectors** for multiple external providers
 - **Optional NL-to-SQL module** (`analytics/nl_query/`) for local Ollama-based analytics workflows
 
 ## High-Level Architecture
 
-The repository follows layered responsibilities:
+The repository follows a layered responsibility structure:
 
 - `handlers/`: provider-specific source connectors and API handlers
 - `ingestion/`: ingestion factory + native ingestion implementations
@@ -74,7 +74,7 @@ pip install -e .
 
 ### Environment Variables
 
-Create a `.env` file in repository root with required values, for example:
+Create a `.env` file in the repository root with the required values, for example:
 
 ```env
 DB_HOST=${DB_HOST}
@@ -149,7 +149,7 @@ Run all tests:
 .venv/bin/python -m pytest -q
 ```
 
-The current test suite covers:
+The current test suite includes coverage for:
 
 - ingestion and handler behavior
 - analytics factory and runner logic
