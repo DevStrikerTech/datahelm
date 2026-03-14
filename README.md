@@ -38,3 +38,9 @@ DataHelm engineering core for ingestion, transformation, and lightweight dashboa
 - Dockerfile is included for production-style packaging.
 - Default container command starts Dagster gRPC API:
   `python -m dagster api grpc -m dagster_op.repository`
+
+## Deployment
+
+- `Deploy` workflow supports staging and production deployment over SSH.
+- Production auto-deploy runs after successful `Docker Release` from `master`.
+- Secret setup details are documented in `docs/deployment.md`.
