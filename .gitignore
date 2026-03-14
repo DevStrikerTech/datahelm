@@ -1,0 +1,58 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build and packaging artifacts
+build/
+dist/
+.egg-info/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test and coverage outputs
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# IDE/editor settings
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+
+# dbt artifacts
+**/target/
+**/dbt_packages/
+**/logs/
+
+# Notebook artifacts
+**/.ipynb_checkpoints/
+
+# Dagster local state
+.dagster_home/
+
+# Generated dashboard reports
+analytics/dashboard_outputs/
