@@ -30,7 +30,13 @@ jobs:
     if: >
       github.event_name == 'workflow_run' &&
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'master'
+      github.event.workflow_run.head_branch == 'master' &&
+      secrets.GHCR_USERNAME != '' &&
+      secrets.GHCR_READ_TOKEN != '' &&
+      secrets.PROD_SSH_HOST != '' &&
+      secrets.PROD_SSH_USER != '' &&
+      secrets.PROD_SSH_KEY != '' &&
+      secrets.PROD_APP_ENV_FILE != ''
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -69,7 +75,13 @@ jobs:
     name: Manual Deploy Staging
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'staging'
+      inputs.environment == 'staging' &&
+      secrets.GHCR_USERNAME != '' &&
+      secrets.GHCR_READ_TOKEN != '' &&
+      secrets.STAGING_SSH_HOST != '' &&
+      secrets.STAGING_SSH_USER != '' &&
+      secrets.STAGING_SSH_KEY != '' &&
+      secrets.STAGING_APP_ENV_FILE != ''
     runs-on: ubuntu-latest
     environment: staging
     env:
@@ -108,7 +120,13 @@ jobs:
     name: Manual Deploy Production
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'production'
+      inputs.environment == 'production' &&
+      secrets.GHCR_USERNAME != '' &&
+      secrets.GHCR_READ_TOKEN != '' &&
+      secrets.PROD_SSH_HOST != '' &&
+      secrets.PROD_SSH_USER != '' &&
+      secrets.PROD_SSH_KEY != '' &&
+      secrets.PROD_APP_ENV_FILE != ''
     runs-on: ubuntu-latest
     environment: production
     env:
