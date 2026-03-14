@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw_ingestion
+    schema: "{{ var('source_schema', 'clashofclans') }}"
+    tables:
+      - name: clashofclans_stats
+
+models:
+  - name: stg_clashofclans_player_stats
+    description: "Staging view over raw clashofclans ingestion table."
+    columns:
+      - name: id
+        tests:
+          - not_null
+
+  - name: fct_clashofclans_player_stats
+    description: "Incremental fact model for player stats."
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
