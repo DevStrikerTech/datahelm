@@ -91,12 +91,12 @@ jobs:
     name: Manual Deploy Staging
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'staging'
+      github.event.inputs.environment == 'staging'
     runs-on: ubuntu-latest
     environment: staging
     env:
       IMAGE_NAME: ghcr.io/${{ github.repository }}
-      IMAGE_TAG: ${{ inputs.image_tag || 'latest' }}
+      IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
       CONTAINER_NAME: datahelm-eng-core-staging
       APP_ENV_FILE: ${{ secrets.STAGING_APP_ENV_FILE }}
     steps:
@@ -152,12 +152,12 @@ jobs:
     name: Manual Deploy Production
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'production'
+      github.event.inputs.environment == 'production'
     runs-on: ubuntu-latest
     environment: production
     env:
       IMAGE_NAME: ghcr.io/${{ github.repository }}
-      IMAGE_TAG: ${{ inputs.image_tag || 'latest' }}
+      IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
       CONTAINER_NAME: datahelm-eng-core
       APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
     steps:
