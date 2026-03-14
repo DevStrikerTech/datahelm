@@ -41,6 +41,6 @@ DataHelm engineering core for ingestion, transformation, and lightweight dashboa
 
 ## Deployment
 
-- `Deploy` workflow supports staging and production deployment over SSH.
+- `Deploy Release` workflow supports staging and production deployment over SSH.
 - Production auto-deploy runs after successful `Docker Release` from `master`.
 - Secret setup details are documented in `docs/deployment.md`.

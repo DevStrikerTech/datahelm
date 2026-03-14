@@ -1,11 +1,11 @@
 # Deployment Workflow
 
-The repository ships with `.github/workflows/deploy.yml`.
+The repository ships with `.github/workflows/deploy-release.yml`.
 
 ## Triggers
 
 - Automatic production deployment after successful `Docker Release` on `master`.
-- Manual deployment via **Actions -> Deploy -> Run workflow** for:
+- Manual deployment via **Actions -> Deploy Release -> Run workflow** for:
   - `staging`
   - `production`
 
