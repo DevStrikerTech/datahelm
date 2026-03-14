@@ -1,6 +1,9 @@
 name: Deploy
 
 on:
+  push:
+    branches:
+      - master
   workflow_run:
     workflows:
       - Docker Release
@@ -25,6 +28,14 @@ permissions:
   contents: read
 
 jobs:
+  deploy_workflow_sanity:
+    name: Deploy Workflow Sanity Check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm deploy workflow syntax on push
+        run: echo "Deploy workflow loaded successfully."
+
   deploy_production_auto:
     name: Auto Deploy Production
     if: >
