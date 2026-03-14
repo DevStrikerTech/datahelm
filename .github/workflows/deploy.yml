@@ -74,7 +74,7 @@ jobs:
           host: ${{ secrets.PROD_SSH_HOST }}
           username: ${{ secrets.PROD_SSH_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ secrets.PROD_SSH_PORT || 22 }}
+          port: 22
           envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
           script: |
             set -eu
@@ -135,7 +135,7 @@ jobs:
           host: ${{ secrets.STAGING_SSH_HOST }}
           username: ${{ secrets.STAGING_SSH_USER }}
           key: ${{ secrets.STAGING_SSH_KEY }}
-          port: ${{ secrets.STAGING_SSH_PORT || 22 }}
+          port: 22
           envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
           script: |
             set -eu
@@ -196,7 +196,7 @@ jobs:
           host: ${{ secrets.PROD_SSH_HOST }}
           username: ${{ secrets.PROD_SSH_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ secrets.PROD_SSH_PORT || 22 }}
+          port: 22
           envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
           script: |
             set -eu
