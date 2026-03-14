@@ -1,0 +1,144 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Docker Release
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deployment target
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      image_tag:
+        description: Image tag to deploy (default latest)
+        required: false
+        default: latest
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy_production_auto:
+    name: Auto Deploy Production
+    if: >
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'master'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: latest
+      CONTAINER_NAME: datahelm-eng-core
+      APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
+    steps:
+      - name: Deploy to production host over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          APP_ENV_FILE: ${{ env.APP_ENV_FILE }}
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          port: ${{ secrets.PROD_SSH_PORT || 22 }}
+          envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
+          script: |
+            set -eu
+            echo "${GHCR_READ_TOKEN}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+            IMAGE_REF="${IMAGE_NAME}:${IMAGE_TAG}"
+            docker pull "${IMAGE_REF}"
+            docker rm -f "${CONTAINER_NAME}" || true
+            docker run -d --name "${CONTAINER_NAME}" --restart unless-stopped \
+              --env-file "${APP_ENV_FILE}" \
+              -p 3000:3000 \
+              "${IMAGE_REF}"
+
+  deploy_staging_manual:
+    name: Manual Deploy Staging
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      inputs.environment == 'staging'
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: ${{ inputs.image_tag || 'latest' }}
+      CONTAINER_NAME: datahelm-eng-core-staging
+      APP_ENV_FILE: ${{ secrets.STAGING_APP_ENV_FILE }}
+    steps:
+      - name: Deploy to staging host over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          APP_ENV_FILE: ${{ env.APP_ENV_FILE }}
+        with:
+          host: ${{ secrets.STAGING_SSH_HOST }}
+          username: ${{ secrets.STAGING_SSH_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          port: ${{ secrets.STAGING_SSH_PORT || 22 }}
+          envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
+          script: |
+            set -eu
+            echo "${GHCR_READ_TOKEN}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+            IMAGE_REF="${IMAGE_NAME}:${IMAGE_TAG}"
+            docker pull "${IMAGE_REF}"
+            docker rm -f "${CONTAINER_NAME}" || true
+            docker run -d --name "${CONTAINER_NAME}" --restart unless-stopped \
+              --env-file "${APP_ENV_FILE}" \
+              -p 3000:3000 \
+              "${IMAGE_REF}"
+
+  deploy_production_manual:
+    name: Manual Deploy Production
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: ${{ inputs.image_tag || 'latest' }}
+      CONTAINER_NAME: datahelm-eng-core
+      APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
+    steps:
+      - name: Deploy to production host over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          APP_ENV_FILE: ${{ env.APP_ENV_FILE }}
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          port: ${{ secrets.PROD_SSH_PORT || 22 }}
+          envs: GHCR_USERNAME,GHCR_READ_TOKEN,IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME,APP_ENV_FILE
+          script: |
+            set -eu
+            echo "${GHCR_READ_TOKEN}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+            IMAGE_REF="${IMAGE_NAME}:${IMAGE_TAG}"
+            docker pull "${IMAGE_REF}"
+            docker rm -f "${CONTAINER_NAME}" || true
+            docker run -d --name "${CONTAINER_NAME}" --restart unless-stopped \
+              --env-file "${APP_ENV_FILE}" \
+              -p 3000:3000 \
+              "${IMAGE_REF}"
