@@ -1,0 +1,20 @@
+base_dashboard:
+  is_active: true
+  notebook_path: analytics/notebooks/source_overview.ipynb
+  schedules:
+    - cron_schedule: "45 */4 * * *"
+      execution_timezone: "UTC"
+      default_status: RUNNING
+
+CLASHOFCLANS_DASHBOARD:
+  is_active: true
+  notebook_path: ${base_dashboard.notebook_path}
+  schedules: ${base_dashboard.schedules}
+  units:
+    OVERVIEW:
+      is_active: true
+      db_schema: clashofclans_analytics
+      db_table: fct_clashofclans_player_stats
+      chart_x_col: name
+      chart_y_col: attackwins
+      row_limit: 25
