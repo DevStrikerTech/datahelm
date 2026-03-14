@@ -1,9 +1,5 @@
 base_api_clashofclans:
   is_active: true
-  developer_emails:
-    - developer@example.com
-  source_escalation: developer@example.com
-  data_classification: internal
   schedules:
     - cron_schedule: "5 */4 * * *"    # every 4 hours
       execution_timezone: "UTC"
@@ -16,9 +12,6 @@ base_api_clashofclans:
 CLASHOFCLANS_PLAYER_STATS:
   ingest_type: clashofclans
   description: "Ingest Clash of Clans Player Stats API into Postgres"
-  developer_emails: ${base_api_clashofclans.developer_emails}
-  source_escalation: ${base_api_clashofclans.source_escalation}
-  data_classification: ${base_api_clashofclans.data_classification}
   schedules: ${base_api_clashofclans.schedules}
   extract_init: ${base_api_clashofclans.extract_init}
   extract_params:
