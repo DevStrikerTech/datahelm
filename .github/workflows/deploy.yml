@@ -30,13 +30,7 @@ jobs:
     if: >
       github.event_name == 'workflow_run' &&
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'master' &&
-      secrets.GHCR_USERNAME != '' &&
-      secrets.GHCR_READ_TOKEN != '' &&
-      secrets.PROD_SSH_HOST != '' &&
-      secrets.PROD_SSH_USER != '' &&
-      secrets.PROD_SSH_KEY != '' &&
-      secrets.PROD_APP_ENV_FILE != ''
+      github.event.workflow_run.head_branch == 'master'
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -45,7 +39,29 @@ jobs:
       CONTAINER_NAME: datahelm-eng-core
       APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
     steps:
+      - name: Validate required production secrets
+        id: preflight
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          PROD_SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
+          PROD_SSH_USER: ${{ secrets.PROD_SSH_USER }}
+          PROD_SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
+          PROD_APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
+        run: |
+          set -eu
+          if [ -z "${GHCR_USERNAME}" ] || [ -z "${GHCR_READ_TOKEN}" ] || [ -z "${PROD_SSH_HOST}" ] || [ -z "${PROD_SSH_USER}" ] || [ -z "${PROD_SSH_KEY}" ] || [ -z "${PROD_APP_ENV_FILE}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip deploy (missing required secrets)
+        if: steps.preflight.outputs.ready != 'true'
+        run: echo "Production deploy skipped: configure required secrets first."
+
       - name: Deploy to production host over SSH
+        if: steps.preflight.outputs.ready == 'true'
         uses: appleboy/ssh-action@v1.0.3
         env:
           GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
@@ -75,13 +91,7 @@ jobs:
     name: Manual Deploy Staging
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'staging' &&
-      secrets.GHCR_USERNAME != '' &&
-      secrets.GHCR_READ_TOKEN != '' &&
-      secrets.STAGING_SSH_HOST != '' &&
-      secrets.STAGING_SSH_USER != '' &&
-      secrets.STAGING_SSH_KEY != '' &&
-      secrets.STAGING_APP_ENV_FILE != ''
+      inputs.environment == 'staging'
     runs-on: ubuntu-latest
     environment: staging
     env:
@@ -90,7 +100,29 @@ jobs:
       CONTAINER_NAME: datahelm-eng-core-staging
       APP_ENV_FILE: ${{ secrets.STAGING_APP_ENV_FILE }}
     steps:
+      - name: Validate required staging secrets
+        id: preflight
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          STAGING_SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          STAGING_SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          STAGING_APP_ENV_FILE: ${{ secrets.STAGING_APP_ENV_FILE }}
+        run: |
+          set -eu
+          if [ -z "${GHCR_USERNAME}" ] || [ -z "${GHCR_READ_TOKEN}" ] || [ -z "${STAGING_SSH_HOST}" ] || [ -z "${STAGING_SSH_USER}" ] || [ -z "${STAGING_SSH_KEY}" ] || [ -z "${STAGING_APP_ENV_FILE}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip deploy (missing required secrets)
+        if: steps.preflight.outputs.ready != 'true'
+        run: echo "Staging deploy skipped: configure required secrets first."
+
       - name: Deploy to staging host over SSH
+        if: steps.preflight.outputs.ready == 'true'
         uses: appleboy/ssh-action@v1.0.3
         env:
           GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
@@ -120,13 +152,7 @@ jobs:
     name: Manual Deploy Production
     if: >
       github.event_name == 'workflow_dispatch' &&
-      inputs.environment == 'production' &&
-      secrets.GHCR_USERNAME != '' &&
-      secrets.GHCR_READ_TOKEN != '' &&
-      secrets.PROD_SSH_HOST != '' &&
-      secrets.PROD_SSH_USER != '' &&
-      secrets.PROD_SSH_KEY != '' &&
-      secrets.PROD_APP_ENV_FILE != ''
+      inputs.environment == 'production'
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -135,7 +161,29 @@ jobs:
       CONTAINER_NAME: datahelm-eng-core
       APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
     steps:
+      - name: Validate required production secrets
+        id: preflight
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          PROD_SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
+          PROD_SSH_USER: ${{ secrets.PROD_SSH_USER }}
+          PROD_SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
+          PROD_APP_ENV_FILE: ${{ secrets.PROD_APP_ENV_FILE }}
+        run: |
+          set -eu
+          if [ -z "${GHCR_USERNAME}" ] || [ -z "${GHCR_READ_TOKEN}" ] || [ -z "${PROD_SSH_HOST}" ] || [ -z "${PROD_SSH_USER}" ] || [ -z "${PROD_SSH_KEY}" ] || [ -z "${PROD_APP_ENV_FILE}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip deploy (missing required secrets)
+        if: steps.preflight.outputs.ready != 'true'
+        run: echo "Production deploy skipped: configure required secrets first."
+
       - name: Deploy to production host over SSH
+        if: steps.preflight.outputs.ready == 'true'
         uses: appleboy/ssh-action@v1.0.3
         env:
           GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
