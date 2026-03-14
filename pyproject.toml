@@ -2,15 +2,6 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "datahelm-eng-core"
-version = "0.1.0"
-description = "DataHelm ingestion and analytics framework"
-authors = [
-  { name="Nishat", email="nishat@example.com" }
-]
-requires-python = ">=3.12.13"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
