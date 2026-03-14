@@ -1,14 +1,12 @@
 # DataHelm
 
-DataHelm is a data engineering framework focused on:
+DataHelm is a data engineering framework focused on the following:
 
-- source ingestion and orchestration
-- dbt transformation workflows
-- notebook-based dashboard execution
-- reusable provider connectors (SharePoint, GCS, S3, BigQuery)
-- optional local LLM analytics query scaffolding
-
-![DataHelm Architecture](https://github.com/DevStrikerTech/datahelm/blob/master/docs/architecture.png?raw=true)
+- Source ingestion orchestration
+- DBT transformation workflows
+- Notebook-based dashboard execution
+- Reusable provider connectors (SharePoint, GCS, S3, BigQuery)
+- Optional local-LLM analytics query scaffolding
 
 ## Core Capabilities
 
