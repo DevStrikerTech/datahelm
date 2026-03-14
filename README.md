@@ -2,7 +2,7 @@
 
 DataHelm is a data engineering framework focused on:
 
-- source ingestion orchestration
+- source ingestion and orchestration
 - dbt transformation workflows
 - notebook-based dashboard execution
 - reusable provider connectors (SharePoint, GCS, S3, BigQuery)
@@ -60,7 +60,7 @@ docs/
 ### Prerequisites
 
 - Python 3.12+
-- PostgreSQL (reachable from local environment)
+- PostgreSQL (accessible from the local environment)
 - Optional: Docker, local Ollama, dbt CLI
 
 ### Installation
@@ -149,7 +149,7 @@ Run all tests:
 .venv/bin/python -m pytest -q
 ```
 
-Current suite covers:
+The current test suite covers:
 
 - ingestion and handler behavior
 - analytics factory and runner logic
