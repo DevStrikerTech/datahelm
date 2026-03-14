@@ -24,3 +24,17 @@ DataHelm engineering core for ingestion, transformation, and lightweight dashboa
 - `ingestion/` for ingestion factory and source implementations
 - `dagster_op/` for jobs, schedules, repository wiring
 - `analytics/` for dbt assets, notebook assets, and analytics helpers
+
+## Branching and CI/CD
+
+- `dev` is the integration branch for day-to-day development.
+- `master` is the production branch.
+- Pull requests into `dev` and `master` run CI tests.
+- Pull requests into `master` are expected to come from `dev`.
+- Pushes to `master` trigger Docker image builds and publish to GHCR.
+
+## Container image
+
+- Dockerfile is included for production-style packaging.
+- Default container command starts Dagster gRPC API:
+  `python -m dagster api grpc -m dagster_op.repository`
