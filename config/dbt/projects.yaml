@@ -1,0 +1,37 @@
+base_dbt_project:
+  is_active: true
+  profile_name: datahelm
+  target: dev
+  profiles_dir: analytics/dbt_profiles
+  dbt_command: build
+base_dbt_unit:
+  is_active: true
+  schedules:
+    - cron_schedule: "15 */4 * * *"
+      execution_timezone: "UTC"
+      default_status: RUNNING
+
+CLASHOFCLANS_SOURCE:
+  is_active: true
+  project_dir: analytics/dbt_projects/datahelm_warehouse
+  profile_name: ${base_dbt_project.profile_name}
+  target: ${base_dbt_project.target}
+  profiles_dir: ${base_dbt_project.profiles_dir}
+  vars:
+    source_schema: clashofclans
+    target_schema: clashofclans_analytics
+  units:
+    STAGING:
+      is_active: ${base_dbt_unit.is_active}
+      dbt_command: build
+      schedules: ${base_dbt_unit.schedules}
+      select:
+        - tag:clashofclans
+        - path:models/staging
+    MARTS:
+      is_active: ${base_dbt_unit.is_active}
+      dbt_command: build
+      schedules: ${base_dbt_unit.schedules}
+      select:
+        - tag:clashofclans
+        - path:models/marts
