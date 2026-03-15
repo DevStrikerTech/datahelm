@@ -103,35 +103,35 @@ python scripts/run_dagster_dev.py --print-only
 
 ## Configuration Model
 
-### Ingestion Config (config/api/*.yaml)
+### Ingestion Config (`config/api/*.yaml`)
 
 Defines source-level extraction, publish targets, schedules, and column mapping.
-Example included: CLASHOFCLANS_PLAYER_STATS
+Example included: `CLASHOFCLANS_PLAYER_STATS`
 
-### dbt Config (config/dbt/projects.yaml)
+### dbt Config (`config/dbt/projects.yaml`)
 
 Defines dbt units, selection/exclusion rules, vars, and schedules.
 
-### Dashboard Config (config/dashboard/projects.yaml)
+### Dashboard Config (`config/dashboard/projects.yaml`)
 
-Defines notebook path, source table mapping, chart columns, and cadence.
+Defines notebook paths, source table mapping, chart columns, and cadence.
 
-### Analytics Semantic Config (config/analytics/semantic_catalog.yaml)
+### Analytics Semantic Config (`config/analytics/semantic_catalog.yaml`)
 
 Defines dataset metadata for the isolated NL-to-SQL module.
 
 ## Reusable Connectors
 
-The repository includes reusable connector classes under handlers/:
+The repository includes reusable connector classes under `handlers/`:
 
-handlers/sharepoint/sharepoint.py – Microsoft Graph auth + site/file access helpers
-handlers/gcs/gcs.py – Upload/download/list/delete/signed URL helpers
-handlers/s3/s3.py – Upload/download/list/delete/presigned URL helpers
-handlers/bigquery/bigquery.py – Query, row fetch, dataframe load, schema helpers
+- `handlers/sharepoint/sharepoint.py` – Microsoft Graph auth and site/file access helpers
+- `handlers/gcs/gcs.py` – Upload, download, list, delete, and signed URL helpers
+- `handlers/s3/s3.py` – Upload, download, list, delete, and presigned URL helpers
+- `handlers/bigquery/bigquery.py` – Query, row fetch, dataframe load, and schema helpers
 
 ## Local LLM Analytics Module
 
-analytics/nl_query/ is an isolated module for natural-language-to-SQL generation using local Ollama:
+`analytics/nl_query/` is an isolated module for natural-language-to-SQL generation using local Ollama:
 
 * Semantic catalog loader
 * SQL read-only safety guard
@@ -186,4 +186,4 @@ Deployment flow is workflow-based:
 
 For complete, long-form project documentation (operations, architecture, and runbook-style details), see:
 
-docs/document.md
+[`docs/document.md`](docs/document.md)
