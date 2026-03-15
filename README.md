@@ -156,8 +156,8 @@ The current test suite includes coverage for:
 
 ## CI/CD and Branching
 
-* dev: integration branch
-* master: release/production branch
+* `dev`: integration branch
+* `master`: release/production branch
 
 Workflows:
 
