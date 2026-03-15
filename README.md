@@ -1,7 +1,5 @@
 # DataHelm
 
-============
-
 DataHelm is a data engineering framework focused on:
 
 - Source ingestion and orchestration
@@ -12,7 +10,6 @@ DataHelm is a data engineering framework focused on:
 
 ## Table of Contents
 
----
 
 - [Core Capabilities](#core-capabilities)
 - [High-Level Architecture](#high-level-architecture)
@@ -30,7 +27,6 @@ DataHelm is a data engineering framework focused on:
 
 ## Core Capabilities
 
----
 
 - **Config-driven ingestion** using YAML in `config/api/`
 - **Dagster orchestration** for jobs, schedules, and sensors
@@ -41,7 +37,6 @@ DataHelm is a data engineering framework focused on:
 
 ## High-Level Architecture
 
----
 
 The repository follows layered responsibilities:
 
@@ -56,7 +51,6 @@ The repository follows layered responsibilities:
 
 ## Repository Structure
 
----
 
 ```text
 dagster_op/
@@ -88,7 +82,6 @@ docs/
 
 ## Local Setup
 
----
 
 ### Prerequisites
 
@@ -132,7 +125,6 @@ python scripts/run_dagster_dev.py --print-only
 
 ## Configuration Model
 
----
 
 ### Ingestion Config (`config/api/*.yaml`)
 
@@ -156,7 +148,6 @@ Defines dataset metadata for the isolated NL-to-SQL module.
 
 ## Reusable Connectors
 
----
 
 The repository includes reusable connector classes under `handlers/`:
 
@@ -171,7 +162,6 @@ The repository includes reusable connector classes under `handlers/`:
 
 ## Local LLM Analytics Module
 
----
 
 `analytics/nl_query/` is an isolated module for natural-language-to-SQL generation using local Ollama:
 
@@ -182,7 +172,6 @@ The repository includes reusable connector classes under `handlers/`:
 
 ## Testing
 
----
 
 Run all tests:
 
@@ -200,7 +189,6 @@ The current test suite covers:
 
 ## CI/CD and Branching
 
----
 
 - `dev`: integration branch
 - `master`: release/production branch
@@ -213,7 +201,6 @@ Workflows:
 
 ## Containerization
 
----
 
 The container image is defined via `Dockerfile`.
 
@@ -225,7 +212,6 @@ python -m dagster api grpc -m dagster_op.repository
 
 ## Deployment
 
----
 
 Deployment flow is workflow-based:
 
@@ -234,7 +220,6 @@ Deployment flow is workflow-based:
 
 ## Contributing and Governance
 
----
 
 - Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)
 - Code of conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
@@ -242,7 +227,6 @@ Deployment flow is workflow-based:
 
 ## Detailed Technical Documentation
 
----
 
 For complete, long-form project documentation (operations, architecture, and runbook-style details), see:
 
