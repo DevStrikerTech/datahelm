@@ -198,7 +198,7 @@ analytics/nl_query/ is an isolated module for natural-language-to-SQL generation
 * Ollama client wrapper
 * Orchestration service
 
-## Testing
+## Testing:
 
 Run all tests with the following command:
 
@@ -214,7 +214,7 @@ The current test suite includes coverage for:
 - Script behavior
 - NL-query safety and service paths
 
-## CI/CD and Branching
+## CI/CD and Branching:
 
 
 - `dev`: integration branch
@@ -253,7 +253,7 @@ python -m dagster api grpc -m dagster_op.repository
 ## Deployment
 
 
-Deployment flow is workflow-based:
+Deployment flow is Workflow-Based:
 
 - Production auto-path after successful Docker release
 - Manual staging/production dispatch path
